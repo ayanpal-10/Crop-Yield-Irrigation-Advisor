@@ -101,3 +101,6 @@ run if `crop_data.csv` isn't already present.
 This is an academic prototype. Predictions and irrigation recommendations
 are based on a sample dataset and simplified rules. They should not be
 treated as professional agricultural advice.
+
+
+Link - https://crop-yield-irrigation-advisor-vuyrr53yzppgiv9h4bkpsq.streamlit.app/
