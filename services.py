@@ -1,5 +1,19 @@
+"""
+services.py
+-----------
+1. Live Weather & Agro-climatic API Connectors.
+2. Explainable Rule-Based Irrigation Logic.
+3. Generative AI Farmer Advisory Layer (Safe Gemini import + template fallback).
+"""
+
 import requests
-import google.generativeai as genai
+
+# Safe import to prevent ModuleNotFoundError on any host
+try:
+    import google.generativeai as genai
+    HAS_GENAI = True
+except ImportError:
+    HAS_GENAI = False
 
 STATE_COORDINATES = {
     "Punjab": (31.1471, 75.3412), "Haryana": (29.0588, 76.0856),
@@ -49,7 +63,7 @@ def calculate_irrigation_recommendation(crop, soil_moisture, rainfall, temperatu
     return level, hours, "; ".join(reasons).capitalize() + "."
 
 def generate_genai_advisory(crop, state, season, yield_val, irr_level, irr_hours, irr_reason, api_key=None, language="English"):
-    if api_key:
+    if api_key and HAS_GENAI:
         try:
             genai.configure(api_key=api_key)
             model = genai.GenerativeModel("gemini-1.5-flash")
